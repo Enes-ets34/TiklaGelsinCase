@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     paddingBottom: 25,
-    fontSize: 30,
+    fontSize: 30, 
   },
   input: {
     fontWeight: "700",
