@@ -1,6 +1,7 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
+
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     paddingBottom: 25,
-    fontSize: 30, 
+    fontSize: 30,
   },
   input: {
     fontWeight: "700",
