@@ -1,0 +1,12 @@
+{
+    "menu": [
+      {
+        "id": 1,
+        "name": "Pizza Margherita",
+        "description": "Classic Italian pizza with tomatoes, mozzarella, and basil.",
+        "price": 150,
+        "ingredients": ["Tomatoes", "Mozzarella", "Basil"]
+      }
+    ]
+  }
+  
