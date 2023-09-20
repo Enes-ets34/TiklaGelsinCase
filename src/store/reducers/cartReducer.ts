@@ -7,7 +7,7 @@ const initialState = {
   cartItems: [] as MenuItem[],
 };
 
-const cartReducer = (state = initialState, action:any) => {
+const cartReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
       return {
@@ -26,7 +26,7 @@ const cartReducer = (state = initialState, action:any) => {
         ...state,
         cartItems: state.cartItems.map((item) =>
           item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: (item.quantity || 0) + 1 }
             : item
         ),
       };
@@ -35,7 +35,7 @@ const cartReducer = (state = initialState, action:any) => {
         ...state,
         cartItems: state.cartItems.map((item) =>
           item.id === action.payload.id
-            ? { ...item, quantity: item.quantity - 1 }
+            ? { ...item, quantity: (item.quantity || 0) - 1 }
             : item
         ),
       };

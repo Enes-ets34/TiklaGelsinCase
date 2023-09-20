@@ -50,6 +50,12 @@ const MenuScreenStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "column",
+    
+    flex: 1,
+    paddingHorizontal: 10,
+    flexWrap: "wrap",
+    overflow: "hidden",
+    
   },
   menuItemText: {
     color: "#FFF",

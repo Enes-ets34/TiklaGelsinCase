@@ -1,14 +1,16 @@
 // /src/components/Menu/MenuItem.tsx
 
 import React from "react";
+
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import MenuScreenStyles from "../styles/MenuScreenStyles"; // Stil dosyasını içe aktarın
 
 type MenuItemProps = {
   index: number;
+  menuItem: any;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ index }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
   return (
     <View
       style={[
@@ -22,12 +24,15 @@ const MenuItem: React.FC<MenuItemProps> = ({ index }) => {
         }}
         style={MenuScreenStyles.menuItemImage}
       />
-      <View style={MenuScreenStyles.menuItemContent}>
-        <Text style={MenuScreenStyles.menuItemText}>Menu {index + 1}</Text>
+      <View   style={MenuScreenStyles.menuItemContent}>
+        <Text style={MenuScreenStyles.menuItemText}>{menuItem.name}</Text>
         <View style={MenuScreenStyles.menuItemIngredients}>
           <Text style={MenuScreenStyles.ingredientsLabel}>İçindekiler:</Text>
-          <Text style={MenuScreenStyles.ingredientsText}>
-            Domates, Biber, Patlıcan
+          <Text  style={MenuScreenStyles.ingredientsText}>
+            {menuItem.ingredients.map((i: string,index:number) => {
+              return <Text numberOfLines={1} ellipsizeMode="tail" style={{ marginRight: 1 }}>{`${i} ${index+1 === menuItem.ingredients.length ? "" : ","}`}</Text>;
+            })}
+       
           </Text>
         </View>
       </View>

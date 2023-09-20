@@ -1,7 +1,20 @@
 import * as actionTypes from "../../constants/actionTypes";
-import { MenuItem } from "../../interfaces/_MenuItem";
 
-export const fetchMenu = (menuData: MenuItem[]) => ({
-  type: actionTypes.FETCH_MENU,
-  payload: menuData,
-});
+import appAxios from "../../utils/appAxios";
+
+export const fetchMenu = () => {
+  return (dispatch: any) => {
+    appAxios
+      .get("/menu")
+      .then((response) => {
+        console.log("response.data :>> ", response.data);
+        dispatch({
+          type: actionTypes.FETCH_MENU,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        console.error("Fetch Menu Error:", error);
+      });
+  };
+};

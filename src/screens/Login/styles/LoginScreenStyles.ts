@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    
   },
   loginBtn: {
     borderRadius: Theme.borderRounded,
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     padding: 15,
-    marginBottom: 20,
+    marginTop: "auto",
+    marginBottom:20
   },
   loginBtnText: {
     color: "white",
@@ -48,14 +50,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     outlineColor: "red",
   },
-  invalidEmail: {
+  invalidInput: {
     paddingLeft: 30,
     marginTop: 5,
     fontWeight: "800",
     color: "#d60018",
     marginVertical: 10,
   },
-  
 });
 
 export default styles;
