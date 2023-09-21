@@ -1,33 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import CartHeader from "./components/CartHeader";
-import CartItem from "./components/CartItem";
+import MenuItem from "../Menu/components/MenuItem";
+import { MenuItem as _MenuItem } from "../../interfaces/_MenuItem";
 import CartScreenStyles from "./styles/CartScreenStyles";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 type Props = {};
 
 const CartScreen: React.FC<Props> = () => {
+  const { cartItems } = useSelector((state) => state.cart);
+  const navigator = useNavigation();
+  let price = cartItems.reduce((total: number, cartItem: _MenuItem) => {
+    return total + cartItem.price * cartItem?.qty;
+  }, 0);
+
+  const [discountAvailable, setDiscountAvailable] = useState(false);
+  const [discount, setDiscount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(price); // totalPrice'i bir state olarak tanımla
+
+  useEffect(() => {
+    if (cartItems.length >= 2) {
+      setDiscountAvailable(true);
+      setDiscount(price*0.3) 
+      setTotalPrice(price - discount); // totalPrice state'ini güncelle
+    } else {
+      setDiscountAvailable(false);
+      setDiscount(0);
+      setTotalPrice(price); // totalPrice state'ini güncelle
+    }
+  }, [cartItems]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CartHeader />
-      {Array.from({ length: 5 }).map((_, i) => (
-        <CartItem index={i} />
-      ))}
-      <View style={CartScreenStyles.cartSummary}>
-        <View style={CartScreenStyles.cartPriceInfo}>
+      {cartItems.length === 0 ? (
+        <View style={CartScreenStyles.emptyCartMessageContainer}>
           <Text>
-            Fiyat <Text style={CartScreenStyles.oldPrice}>40TL</Text>
+            sepetiniz boş...{" "}
+            <TouchableOpacity onPress={() => navigator.navigate("Menu")}>
+              <Text
+                style={{ color: "#dc2626", textDecorationLine: "underline" }}
+              >
+                buraya basarak
+              </Text>
+            </TouchableOpacity>{" "}
+            menu'ye gidebilirsiniz
           </Text>
-          <Text style={CartScreenStyles.discount}>İndirim 3TL</Text>
         </View>
-        <Text style={CartScreenStyles.total}>Toplam 37 TL</Text>
-      </View>
-      <View style={CartScreenStyles.cartFooter}>
-        <TouchableOpacity style={CartScreenStyles.buyButton}>
-          <Text style={CartScreenStyles.buyButtonText}>240TL Satın Al</Text>
-        </TouchableOpacity>
-      </View>
+      ) : (
+        cartItems.map((cartItem: _MenuItem, index: number) => (
+          <MenuItem menuItem={cartItem} key={cartItem.id} index={index} />
+        ))
+      )}
+      {cartItems.length > 0 && (
+        <>
+          <View style={CartScreenStyles.cartSummary}>
+            <View style={CartScreenStyles.cartPriceInfo}>
+              <Text>
+                <Text style={discountAvailable ? CartScreenStyles.oldPrice : CartScreenStyles.discount}>
+                 Fiyat {JSON.stringify(price)}TL
+                </Text>
+              </Text>
+              {discountAvailable && <Text style={CartScreenStyles.discount}>İndirim {discount}TL</Text>}
+            </View>
+            <Text style={CartScreenStyles.total}>Toplam {totalPrice} TL</Text>
+          </View>
+          <View style={CartScreenStyles.cartFooter}>
+            <TouchableOpacity style={CartScreenStyles.buyButton}>
+              <Text style={CartScreenStyles.buyButtonText}>{totalPrice}TL Satın Al</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

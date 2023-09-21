@@ -1,27 +1,51 @@
-// /src/screens/Menu/index.tsx
-
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-import { ScrollView } from "react-native";
-
-import React, { useState } from "react";
+import { ScrollView, Text } from "react-native";
+import React, { useEffect, useState } from "react";
 import MenuHeader from "./components/MenuHeader";
 import MenuItem from "./components/MenuItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MenuItem as _MenuItem } from "../../interfaces/_MenuItem";
+import { addToCart } from "../../store/actions/cartActions";
 
 type Props = {};
 
 const MenuScreen: React.FC<Props> = () => {
-  const { menuItems } = useSelector((state: any) => state.menu);
+  const dispatch = useDispatch();
+  const { menuItems, filteredItems } = useSelector((state: any) => state.menu);
+  const { cartItems } = useSelector((state: any) => state.cart);
+
+  let renderData = filteredItems.length > 0 ? filteredItems : menuItems;
+  useEffect(() => {
+    const updatedMenu = renderData.map((m: _MenuItem) => ({
+      ...m,
+      qty: 0,
+    }));
+    renderData = updatedMenu;
+  }, []);
+
+
+  // Sepete ürün eklemek için bir işlev
+  const addCartHandler = (item: _MenuItem) => {
+    // Eklenen ürünü cartActions'a gönder
+    dispatch(addToCart(item));
+  };
 
   return (
     <SafeAreaProvider>
+      <MenuHeader />
       <ScrollView>
-        <MenuHeader />
-        {menuItems.map((menuItem: any, index: number) => (
-          <MenuItem menuItem={menuItem} key={menuItem.id} index={index} />
+        {renderData.map((menuItem: _MenuItem, index: number) => (
+          <MenuItem
+            addCartHandler={addCartHandler} // Sepete ekleme işlevini iletiyoruz
+            menuItem={menuItem}
+            key={menuItem.id}
+            index={index}
+          />
         ))}
       </ScrollView>
+      <Text>{JSON.stringify(menuItems)}</Text>
+      <hr/>
+      <Text>{JSON.stringify(cartItems)}</Text>
     </SafeAreaProvider>
   );
 };

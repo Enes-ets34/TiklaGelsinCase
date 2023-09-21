@@ -1,16 +1,64 @@
 // /src/components/Menu/MenuItem.tsx
 
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import MenuScreenStyles from "../styles/MenuScreenStyles"; // Stil dosyasını içe aktarın
+import MenuScreenStyles from "../styles/MenuScreenStyles";
+import { useSelector, useDispatch } from "react-redux";
+import { MenuItem as _MenuItem } from "../../../interfaces/_MenuItem";
+import {
+  addToCart,
+  removeFromCart,
+  increaseQty,
+  decreaseQty,
+} from "../../../store/actions/cartActions";
 
 type MenuItemProps = {
   index: number;
-  menuItem: any;
+  menuItem: _MenuItem;
 };
 
 const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
+  const { cartItems } = useSelector((state: any) => state.cart);
+  const [hasAlreadyCart, setHasAlreadyCart] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const foundedData = cartItems.find((m: _MenuItem) => {
+      return m.id === menuItem.id;
+    });
+    if (foundedData) {
+      setHasAlreadyCart(true);
+      menuItem.qty = foundedData.qty;
+    }
+  }, [cartItems]);
+
+  // Sepete ürün eklemek için işlev
+  const addCartHandler = (item: _MenuItem) => {
+    dispatch(addToCart(item));
+    menuItem.qty = menuItem.qty + 1;
+  };
+
+  // Sepetten ürün çıkarmak için işlev
+  const removeCartHandler = (item: _MenuItem) => {
+    dispatch(removeFromCart(item));
+  };
+
+  // Ürün adedini artırmak için işlev
+  const increaseQuantity = (item: _MenuItem) => {
+    dispatch(increaseQty(item));
+  };
+
+  // Ürün adedini azaltmak için işlev
+  const decreaseQuantity = (item: _MenuItem) => {
+    if (item.qty === 1) {
+      removeCartHandler(item);
+      setHasAlreadyCart(false);
+      item.qty = 0;
+    } else if (item.qty !== 1) {
+      dispatch(decreaseQty(item));
+    }
+  };
+
   return (
     <View
       style={[
@@ -24,23 +72,65 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
         }}
         style={MenuScreenStyles.menuItemImage}
       />
-      <View   style={MenuScreenStyles.menuItemContent}>
+      <View style={MenuScreenStyles.menuItemContent}>
         <Text style={MenuScreenStyles.menuItemText}>{menuItem.name}</Text>
         <View style={MenuScreenStyles.menuItemIngredients}>
           <Text style={MenuScreenStyles.ingredientsLabel}>İçindekiler:</Text>
-          <Text  style={MenuScreenStyles.ingredientsText}>
-            {menuItem.ingredients.map((i: string,index:number) => {
-              return <Text numberOfLines={1} ellipsizeMode="tail" style={{ marginRight: 1 }}>{`${i} ${index+1 === menuItem.ingredients.length ? "" : ","}`}</Text>;
+          <Text style={MenuScreenStyles.ingredientsText}>
+            {menuItem.ingredients.map((i: string, index: number) => {
+              return (
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={{ marginRight: 1 }}
+                  key={index}
+                >{`${i} ${
+                  index + 1 === menuItem.ingredients.length ? "" : ","
+                }`}</Text>
+              );
             })}
-       
           </Text>
         </View>
       </View>
-      <TouchableOpacity style={MenuScreenStyles.addToCartButton}>
-        <Text style={MenuScreenStyles.addToCartButtonText}>
-          150TL Sepete Ekle
-        </Text>
-      </TouchableOpacity>
+      {hasAlreadyCart ? (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            onPress={() => increaseQuantity(menuItem)} // Ürün adedini artırmak için işlevi çağırın
+            style={{
+              padding: 8,
+              borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor: "#FFF",
+            }}
+          >
+            <Text style={{ fontSize: 12, fontWeight: "900" }}>+</Text>
+          </TouchableOpacity>
+
+          <Text style={{ color: "#FFF", marginHorizontal: 5 }}>
+            {menuItem?.qty} Adet
+          </Text>
+          <TouchableOpacity
+            onPress={() => decreaseQuantity(menuItem)} // Ürün adedini azaltmak için işlevi çağırın
+            style={{
+              padding: 8,
+              borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor: "#FFF",
+            }}
+          >
+            <Text style={{ fontSize: 12, fontWeight: "900" }}>-</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity
+          onPress={() => addCartHandler(menuItem)}
+          style={MenuScreenStyles.addToCartButton}
+        >
+          <Text style={MenuScreenStyles.addToCartButtonText}>
+            {menuItem.price} TL Sepete Ekle
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -10,6 +10,8 @@ const initialState = {
 const cartReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
+      console.log(action.payload);
+
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload],
@@ -21,21 +23,24 @@ const cartReducer = (state = initialState, action: any) => {
           (item) => item.id !== action.payload.id
         ),
       };
-    case actionTypes.INCREASE_QUANTITY:
+    case actionTypes.INCREASE_QTY:
       return {
         ...state,
         cartItems: state.cartItems.map((item) =>
           item.id === action.payload.id
-            ? { ...item, quantity: (item.quantity || 0) + 1 }
+            ? { ...item, qty: (item.qty || 0) + 1 }
             : item
-        ),
+            ),
+           
       };
-    case actionTypes.DECREASE_QUANTITY:
+      
+      
+    case actionTypes.DECREASE_QTY:
       return {
         ...state,
         cartItems: state.cartItems.map((item) =>
           item.id === action.payload.id
-            ? { ...item, quantity: (item.quantity || 0) - 1 }
+            ? { ...item, qty: (item.qty || 0) - 1 }
             : item
         ),
       };

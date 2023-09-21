@@ -14,6 +14,12 @@ const CartScreenStyles = StyleSheet.create({
     fontWeight: "600",
     color: Theme.primaryColor,
   },
+  emptyCartMessageContainer:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    padding:20
+  },
   cartItem: {
     backgroundColor: Theme.primaryColor,
     padding: 10,
@@ -39,6 +45,7 @@ const CartScreenStyles = StyleSheet.create({
     display: "flex",
     borderBottomWidth: 2,
     paddingHorizontal: 50,
+    paddingVertical:10
   },
   oldPrice: {
     textDecorationLine: "line-through",
@@ -47,7 +54,7 @@ const CartScreenStyles = StyleSheet.create({
     marginVertical: 5,
   },
   total: {
-    marginTop: 20,
+    
   },
   cartFooter: {
     backgroundColor: "#dedede",

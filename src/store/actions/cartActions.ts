@@ -3,7 +3,7 @@ import { MenuItem } from "../../interfaces/_MenuItem";
 
 export const addToCart = (menuItem: MenuItem) => ({
   type: actionTypes.ADD_TO_CART,
-  payload: menuItem,
+  payload: {...menuItem,qty:1},
 });
 
 export const removeFromCart = (menuItem: MenuItem) => ({
@@ -11,12 +11,12 @@ export const removeFromCart = (menuItem: MenuItem) => ({
   payload: menuItem,
 });
 
-export const increaseQuantity = (menuItem: MenuItem) => ({
-  type: actionTypes.INCREASE_QUANTITY,
+export const increaseQty = (menuItem: MenuItem) => ({
+  type: actionTypes.INCREASE_QTY,
   payload: menuItem,
 });
 
-export const decreaseQuantity = (menuItem: MenuItem) => ({
-  type: actionTypes.DECREASE_QUANTITY,
+export const decreaseQty = (menuItem: MenuItem) => ({
+  type: actionTypes.DECREASE_QTY,
   payload: menuItem,
 });

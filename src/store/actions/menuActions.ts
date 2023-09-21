@@ -18,3 +18,11 @@ export const fetchMenu = () => {
       });
   };
 };
+export const filterMenu = (searchKey: string) => {
+  return (dispatch: any) => {
+    dispatch({
+      type:actionTypes.FILTER_MENU,
+      payload:searchKey
+    })
+  };
+};

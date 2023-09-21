@@ -7,6 +7,7 @@ const MenuScreenStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
   },
   menuHeaderText: {
     fontSize: Theme.fontSizeLarge,
@@ -50,12 +51,11 @@ const MenuScreenStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     flexDirection: "column",
-    
+
     flex: 1,
     paddingHorizontal: 10,
     flexWrap: "wrap",
     overflow: "hidden",
-    
   },
   menuItemText: {
     color: "#FFF",
@@ -81,7 +81,27 @@ const MenuScreenStyles = StyleSheet.create({
   addToCartButtonText: {
     fontSize: Theme.fontSizeExtraSmall,
   },
-  // Diğer stil tanımlamalarını ekleyin
+  searchInput: {
+    outlineStyle: "none",
+    position: "absolute",
+    left: 50,
+    top: 0,
+    backgroundColor: "transparent",
+    width: "80%",
+    height: "100%",
+  },
+  searchArea: {
+    marginTop: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginBottom:10
+  },
+  searchBar: {
+    position: "relative",
+    borderWidth: 1,
+    borderRadius: 100,
+    padding: 20,
+  },
 });
 
 export default MenuScreenStyles;

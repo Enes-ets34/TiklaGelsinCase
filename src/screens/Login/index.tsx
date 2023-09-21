@@ -23,11 +23,13 @@ const LoginScreen: React.FC<Props> = () => {
 
   const handleLogin = () => {
     if (!isLoginDisabled) {
+      // @ts-ignore
       dispatch(loginUser({ email, password }));
     }
   };
   useEffect(() => {
     if (user) {
+      // @ts-ignore
       navigator.navigate("Menu");
     }
   }, [user]);

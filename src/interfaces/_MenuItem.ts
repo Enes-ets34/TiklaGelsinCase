@@ -5,5 +5,5 @@ export interface MenuItem {
   description: string;
   price: number;
   ingredients: string[];
-  quantity?: number;
+  qty?: number;
 }
