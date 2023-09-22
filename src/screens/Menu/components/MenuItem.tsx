@@ -15,11 +15,14 @@ import {
 type MenuItemProps = {
   index: number;
   menuItem: _MenuItem;
+  addCartHandler:Function
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index,addCartHandler }) => {
   const { cartItems } = useSelector((state: any) => state.cart);
+
   const [hasAlreadyCart, setHasAlreadyCart] = useState(false);
+  const [foundedData, setFoundedData] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,15 +31,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
     });
     if (foundedData) {
       setHasAlreadyCart(true);
-      menuItem.qty = foundedData.qty;
+      setFoundedData(foundedData)
+    }else{
+      setFoundedData(null)
+      setHasAlreadyCart(false);
     }
-  }, [cartItems]);
-
-  // Sepete ürün eklemek için işlev
-  const addCartHandler = (item: _MenuItem) => {
-    dispatch(addToCart(item));
-    menuItem.qty = menuItem.qty + 1;
-  };
+ 
+  }, [cartItems, menuItem]);
 
   // Sepetten ürün çıkarmak için işlev
   const removeCartHandler = (item: _MenuItem) => {
@@ -46,16 +47,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
   // Ürün adedini artırmak için işlev
   const increaseQuantity = (item: _MenuItem) => {
     dispatch(increaseQty(item));
+
   };
 
   // Ürün adedini azaltmak için işlev
   const decreaseQuantity = (item: _MenuItem) => {
-    if (item.qty === 1) {
+    dispatch(decreaseQty(item));
+
+    console.log("buraya basildi... dec.");
+    if (item.qty === 0) {
+      console.log("buraya geldi urun");
       removeCartHandler(item);
       setHasAlreadyCart(false);
-      item.qty = 0;
-    } else if (item.qty !== 1) {
-      dispatch(decreaseQty(item));
     }
   };
 
@@ -92,7 +95,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
           </Text>
         </View>
       </View>
-      {hasAlreadyCart ? (
+      {hasAlreadyCart && (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => increaseQuantity(menuItem)} // Ürün adedini artırmak için işlevi çağırın
@@ -107,7 +110,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
           </TouchableOpacity>
 
           <Text style={{ color: "#FFF", marginHorizontal: 5 }}>
-            {menuItem?.qty} Adet
+            {foundedData?.qty} Adet
           </Text>
           <TouchableOpacity
             onPress={() => decreaseQuantity(menuItem)} // Ürün adedini azaltmak için işlevi çağırın
@@ -121,16 +124,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index }) => {
             <Text style={{ fontSize: 12, fontWeight: "900" }}>-</Text>
           </TouchableOpacity>
         </View>
-      ) : (
-        <TouchableOpacity
-          onPress={() => addCartHandler(menuItem)}
-          style={MenuScreenStyles.addToCartButton}
-        >
-          <Text style={MenuScreenStyles.addToCartButtonText}>
-            {menuItem.price} TL Sepete Ekle
-          </Text>
-        </TouchableOpacity>
       )}
+      {hasAlreadyCart || menuItem.qty===0 && (
+          <TouchableOpacity
+            onPress={() => addCartHandler(menuItem)}
+            style={MenuScreenStyles.addToCartButton}
+          >
+            <Text style={MenuScreenStyles.addToCartButtonText}>
+              {menuItem.price} TL Sepete Ekle
+            </Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };

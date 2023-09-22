@@ -58,10 +58,7 @@ const LoginScreen: React.FC<Props> = () => {
           onPasswordChange={onPasswordChange}
           isEmailValid={isEmailValid}
         />
-        <Text>{JSON.stringify(email)}</Text>
-        <Text>{JSON.stringify(password)}</Text>
-        <Text>{JSON.stringify(isEmailValid)}</Text>
-        <Text>{JSON.stringify(user)}</Text>
+
         <TouchableOpacity
           onPress={handleLogin}
           style={[styles.loginBtn, { opacity: isLoginDisabled ? 0.5 : 1 }]}

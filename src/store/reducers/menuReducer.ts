@@ -1,5 +1,5 @@
 import { MenuItem } from "../../interfaces/_MenuItem";
-import * as Actions from "../../constants/actionTypes";
+import * as actionTypes from "../../constants/actionTypes";
 
 interface MenuState {
   menuItems: MenuItem[];
@@ -14,21 +14,28 @@ const initialState: MenuState = {
 };
 const menuReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case Actions.FETCH_MENU:
+    case actionTypes.FETCH_MENU:
       return { ...state, menuItems: action.payload };
-      case Actions.FILTER_MENU:
-        const searchText = action.payload.toLowerCase(); 
-        const filteredItems = state.menuItems.filter((item) => {
-          const itemNameLower = item.name.toLowerCase();
-          const ingredientsLower = item.ingredients
-            .map((ingredient) => ingredient.toLowerCase())
-            .join(" "); 
-      
-          return itemNameLower.includes(searchText) || ingredientsLower.includes(searchText);
-        });
-      
-        return { ...state, searchText: action.payload, filteredItems }; 
-      
+    case actionTypes.FILTER_MENU:
+      const searchText = action.payload.toLowerCase();
+      const filteredItems = state.menuItems.filter((item) => {
+        const itemNameLower = item.name.toLowerCase();
+        const ingredientsLower = item.ingredients
+          .map((ingredient) => ingredient.toLowerCase())
+          .join(" ");
+
+        return (
+          itemNameLower.includes(searchText) ||
+          ingredientsLower.includes(searchText)
+        );
+      });
+
+      return { ...state, searchText: action.payload, filteredItems };
+    case actionTypes.UPDATE_MENU_ITEMS:
+      return {
+        ...state,
+        menuItems: action.payload,
+      };
     default:
       return state;
   }

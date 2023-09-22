@@ -7,10 +7,15 @@ export const fetchMenu = () => {
     appAxios
       .get("/menu")
       .then((response) => {
-        console.log("response.data :>> ", response.data);
+
         dispatch({
           type: actionTypes.FETCH_MENU,
-          payload: response.data,
+          payload: response.data.map(m=>{
+            return{
+              ...m,
+              qty:0
+            }
+          }),
         });
       })
       .catch((error) => {
@@ -26,3 +31,10 @@ export const filterMenu = (searchKey: string) => {
     })
   };
 };
+export const updateMenuItems = (menuItems: Array<Object>) => ({
+  type: actionTypes.UPDATE_MENU_ITEMS,
+  payload: menuItems,
+});
+
+
+

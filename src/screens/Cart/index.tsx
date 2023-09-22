@@ -5,12 +5,14 @@ import CartHeader from "./components/CartHeader";
 import MenuItem from "../Menu/components/MenuItem";
 import { MenuItem as _MenuItem } from "../../interfaces/_MenuItem";
 import CartScreenStyles from "./styles/CartScreenStyles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { clearCart } from "../../store/actions/cartActions";
 
 type Props = {};
 
 const CartScreen: React.FC<Props> = () => {
+  const dispatch = useDispatch()
   const { cartItems } = useSelector((state) => state.cart);
   const navigator = useNavigation();
   let price = cartItems.reduce((total: number, cartItem: _MenuItem) => {
@@ -69,7 +71,7 @@ const CartScreen: React.FC<Props> = () => {
             <Text style={CartScreenStyles.total}>Toplam {totalPrice} TL</Text>
           </View>
           <View style={CartScreenStyles.cartFooter}>
-            <TouchableOpacity style={CartScreenStyles.buyButton}>
+            <TouchableOpacity onPress={()=>dispatch(clearCart())} style={CartScreenStyles.buyButton}>
               <Text style={CartScreenStyles.buyButtonText}>{totalPrice}TL Satın Al</Text>
             </TouchableOpacity>
           </View>

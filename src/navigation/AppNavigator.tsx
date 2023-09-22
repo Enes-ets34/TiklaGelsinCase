@@ -24,8 +24,7 @@ const App = () => {
           // Kullanıcı bilgisi Redux store'a gönderilir
           dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
           user = { ...JSON.parse(storedUser) };
-          console.log("storedUser :>> ", storedUser);
-          console.log("user :>> ", user);
+         
         } else {
           user = null;
         }

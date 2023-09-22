@@ -10,12 +10,18 @@ const initialState = {
 const cartReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
-      console.log(action.payload);
-
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
+        cartItems: [...state.cartItems, { ...action.payload, qty: 1 }],
       };
+    case actionTypes.CLEAR_CART:
+      alert(`${new Date().getTime()} numaralı siparişiniz verilmiştir...`)
+      
+      return {
+        ...state,
+        cartItems: [],
+      };
+      
     case actionTypes.REMOVE_FROM_CART:
       return {
         ...state,
@@ -30,19 +36,21 @@ const cartReducer = (state = initialState, action: any) => {
           item.id === action.payload.id
             ? { ...item, qty: (item.qty || 0) + 1 }
             : item
-            ),
-           
+        ),
       };
-      
-      
+
     case actionTypes.DECREASE_QTY:
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, qty: (item.qty || 0) - 1 }
-            : item
-        ),
+        cartItems: state.cartItems
+          .map((item) =>
+            item.id === action.payload.id
+              ? item.qty <= 1
+                ? null // Qty 1 ise ürünü kaldır
+                : { ...item, qty: (item.qty || 0) - 1 }
+              : item
+          )
+          .filter((item) => item !== null), // Sıfır qty'li ürünleri çıkar
       };
     default:
       return state;

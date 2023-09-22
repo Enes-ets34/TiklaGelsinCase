@@ -15,19 +15,15 @@ const MenuScreen: React.FC<Props> = () => {
   const { cartItems } = useSelector((state: any) => state.cart);
 
   let renderData = filteredItems.length > 0 ? filteredItems : menuItems;
-  useEffect(() => {
-    const updatedMenu = renderData.map((m: _MenuItem) => ({
-      ...m,
-      qty: 0,
-    }));
-    renderData = updatedMenu;
-  }, []);
+ 
 
 
   // Sepete ürün eklemek için bir işlev
   const addCartHandler = (item: _MenuItem) => {
+
     // Eklenen ürünü cartActions'a gönder
     dispatch(addToCart(item));
+    
   };
 
   return (

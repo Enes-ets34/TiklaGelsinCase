@@ -1,9 +1,14 @@
 import * as actionTypes from "../../constants/actionTypes";
 import { MenuItem } from "../../interfaces/_MenuItem";
 
+export const clearCart = (menuItem: MenuItem) => ({
+  type: actionTypes.CLEAR_CART,
+  payload: null,
+});
+
 export const addToCart = (menuItem: MenuItem) => ({
   type: actionTypes.ADD_TO_CART,
-  payload: {...menuItem,qty:1},
+  payload: menuItem,
 });
 
 export const removeFromCart = (menuItem: MenuItem) => ({
