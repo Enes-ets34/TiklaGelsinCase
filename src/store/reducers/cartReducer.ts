@@ -15,8 +15,6 @@ const cartReducer = (state = initialState, action: any) => {
         cartItems: [...state.cartItems, { ...action.payload, qty: 1 }],
       };
     case actionTypes.CLEAR_CART:
-      alert(`${new Date().getTime()} numaralı siparişiniz verilmiştir...`)
-      
       return {
         ...state,
         cartItems: [],

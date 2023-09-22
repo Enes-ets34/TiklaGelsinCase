@@ -8,12 +8,17 @@ import CartScreenStyles from "./styles/CartScreenStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { clearCart } from "../../store/actions/cartActions";
+import CustomModal from "../components/shared/Modal";
+import  {showModal as showModalAction}  from "../../store/actions/modalActions";
+
 
 type Props = {};
 
 const CartScreen: React.FC<Props> = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const { showModal,message } = useSelector((state) => state.modal);
+
   const navigator = useNavigation();
   let price = cartItems.reduce((total: number, cartItem: _MenuItem) => {
     return total + cartItem.price * cartItem?.qty;
@@ -23,10 +28,18 @@ const CartScreen: React.FC<Props> = () => {
   const [discount, setDiscount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(price); // totalPrice'i bir state olarak tanımla
 
+
+  const handleClearCart = () =>{
+    dispatch(clearCart())
+    console.log("bu calisti mi");
+    
+    dispatch(showModalAction(`${new Date().getTime()} numaralı siparişiniz başarıyla oluşturulmuştur...`,'bla'));
+
+  }
   useEffect(() => {
     if (cartItems.length >= 2) {
       setDiscountAvailable(true);
-      setDiscount(price*0.3) 
+      setDiscount(price * 0.3);
       setTotalPrice(price - discount); // totalPrice state'ini güncelle
     } else {
       setDiscountAvailable(false);
@@ -34,10 +47,16 @@ const CartScreen: React.FC<Props> = () => {
       setTotalPrice(price); // totalPrice state'ini güncelle
     }
   }, [cartItems]);
-
+  const handleClose = () => {
+    setShowModal(false)
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CartHeader />
+      <CustomModal
+        message={message}
+        visible={showModal}
+      />
       {cartItems.length === 0 ? (
         <View style={CartScreenStyles.emptyCartMessageContainer}>
           <Text>
@@ -62,17 +81,32 @@ const CartScreen: React.FC<Props> = () => {
           <View style={CartScreenStyles.cartSummary}>
             <View style={CartScreenStyles.cartPriceInfo}>
               <Text>
-                <Text style={discountAvailable ? CartScreenStyles.oldPrice : CartScreenStyles.discount}>
-                 Fiyat {JSON.stringify(price)}TL
+                <Text
+                  style={
+                    discountAvailable
+                      ? CartScreenStyles.oldPrice
+                      : CartScreenStyles.discount
+                  }
+                >
+                  Fiyat {JSON.stringify(price)}TL
                 </Text>
               </Text>
-              {discountAvailable && <Text style={CartScreenStyles.discount}>İndirim {discount}TL</Text>}
+              {discountAvailable && (
+                <Text style={CartScreenStyles.discount}>
+                  İndirim {discount}TL
+                </Text>
+              )}
             </View>
             <Text style={CartScreenStyles.total}>Toplam {totalPrice} TL</Text>
           </View>
           <View style={CartScreenStyles.cartFooter}>
-            <TouchableOpacity onPress={()=>dispatch(clearCart())} style={CartScreenStyles.buyButton}>
-              <Text style={CartScreenStyles.buyButtonText}>{totalPrice}TL Satın Al</Text>
+            <TouchableOpacity
+              onPress={handleClearCart}
+              style={CartScreenStyles.buyButton}
+            >
+              <Text style={CartScreenStyles.buyButtonText}>
+                {totalPrice}TL Satın Al
+              </Text>
             </TouchableOpacity>
           </View>
         </>

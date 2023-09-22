@@ -6,7 +6,6 @@ import MenuScreenStyles from "../styles/MenuScreenStyles";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuItem as _MenuItem } from "../../../interfaces/_MenuItem";
 import {
-  addToCart,
   removeFromCart,
   increaseQty,
   decreaseQty,
@@ -54,12 +53,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index,addCartHandler }) =
   const decreaseQuantity = (item: _MenuItem) => {
     dispatch(decreaseQty(item));
 
-    console.log("buraya basildi... dec.");
-    if (item.qty === 0) {
-      console.log("buraya geldi urun");
-      removeCartHandler(item);
-      setHasAlreadyCart(false);
-    }
+   
   };
 
   return (
@@ -110,6 +104,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index,addCartHandler }) =
           </TouchableOpacity>
 
           <Text style={{ color: "#FFF", marginHorizontal: 5 }}>
+            {/* @ts-ignore */}
             {foundedData?.qty} Adet
           </Text>
           <TouchableOpacity

@@ -15,3 +15,8 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const INCREASE_QTY = 'INCREASE_QTY';
 export const DECREASE_QTY = 'DECREASE_QTY';
 
+// Modal Actions
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+
+
