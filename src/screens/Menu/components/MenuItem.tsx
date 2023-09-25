@@ -11,13 +11,13 @@ import {
   decreaseQty,
 } from "../../../store/actions/cartActions";
 
-type MenuItemProps = {
+type Props = {
   index: number;
   menuItem: _MenuItem;
   addCartHandler:Function
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ menuItem, index,addCartHandler }) => {
+const MenuItem: React.FC<Props> = ({ menuItem, index,addCartHandler }) => {
   const { cartItems } = useSelector((state: any) => state.cart);
 
   const [hasAlreadyCart, setHasAlreadyCart] = useState(false);

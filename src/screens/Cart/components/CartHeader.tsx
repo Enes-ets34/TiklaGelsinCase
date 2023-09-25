@@ -10,6 +10,7 @@ const CartHeader: React.FC<Props> = () => {
   const navigation = useNavigation();
 
   const goBack = () => {
+    //@ts-ignore
     navigation.navigate("Menu");
   };
   return (

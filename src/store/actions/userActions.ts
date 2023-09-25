@@ -2,9 +2,10 @@
 import * as Actions from "../../constants/actionTypes";
 import appAxios from "../../utils/appAxios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {User} from "../../interfaces/_User"
+import { showModal } from "./modalActions";
 
-
-export const loginUser = (userData: Object) => {
+export const loginUser = (userData: User) => {
 
   return (dispatch: any) => {
     appAxios
@@ -12,10 +13,8 @@ export const loginUser = (userData: Object) => {
       .then((response) => {
         if (response.data.length > 0) {
           const user = response.data[0];
-          // Kullanıcı verilerini AsyncStorage'e kaydet
           AsyncStorage.setItem("user", JSON.stringify(user))
             .then(() => {
-              // AsyncStorage'e kaydedildikten sonra Redux'a dispatch yap
               dispatch({
                 type: Actions.LOGIN,
                 payload: user,
@@ -23,12 +22,16 @@ export const loginUser = (userData: Object) => {
               
             })
             .catch((error) => {
-              console.error("AsyncStorage Error:", error);
+              dispatch(showModal(error,"error"))
             });
+        }
+        else{          
+         dispatch(showModal("kullanıcı adınız veya şifreniz hatalıdır...","error"))
         }
       })
       .catch((error) => {
-        console.error(error);
+        dispatch(showModal(error,"error"))
+
       });
   };
 };
@@ -44,7 +47,7 @@ export const logoutUser = () => {
         
       })
       .catch((error) => {
-        console.error("AsyncStorage Error:", error);
+        dispatch(showModal(error,"error"))
       });
   };
 };

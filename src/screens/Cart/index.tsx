@@ -17,7 +17,6 @@ type Props = {};
 const CartScreen: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
-  const { showModal,message } = useSelector((state) => state.modal);
 
   const navigator = useNavigation();
   let price = cartItems.reduce((total: number, cartItem: _MenuItem) => {
@@ -31,9 +30,8 @@ const CartScreen: React.FC<Props> = () => {
 
   const handleClearCart = () =>{
     dispatch(clearCart())
-    console.log("bu calisti mi");
     
-    dispatch(showModalAction(`${new Date().getTime()} numaralı siparişiniz başarıyla oluşturulmuştur...`,'bla'));
+    dispatch(showModalAction(`${new Date().getTime()} numaralı siparişiniz başarıyla oluşturulmuştur...`,'success'));
 
   }
   useEffect(() => {
@@ -47,16 +45,11 @@ const CartScreen: React.FC<Props> = () => {
       setTotalPrice(price); // totalPrice state'ini güncelle
     }
   }, [cartItems]);
-  const handleClose = () => {
-    setShowModal(false)
-  };
+ 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CartHeader />
-      <CustomModal
-        message={message}
-        visible={showModal}
-      />
+    
       {cartItems.length === 0 ? (
         <View style={CartScreenStyles.emptyCartMessageContainer}>
           <Text>
@@ -73,7 +66,8 @@ const CartScreen: React.FC<Props> = () => {
         </View>
       ) : (
         cartItems.map((cartItem: _MenuItem, index: number) => (
-          <MenuItem menuItem={cartItem} key={cartItem.id} index={index} />
+          //@ts-ignore
+          <MenuItem  menuItem={cartItem} key={cartItem.id} index={index} />
         ))
       )}
       {cartItems.length > 0 && (

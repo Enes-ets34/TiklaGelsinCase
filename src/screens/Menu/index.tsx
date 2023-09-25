@@ -12,16 +12,13 @@ type Props = {};
 const MenuScreen: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const { menuItems, filteredItems } = useSelector((state: any) => state.menu);
-  const { cartItems } = useSelector((state: any) => state.cart);
 
   let renderData = filteredItems.length > 0 ? filteredItems : menuItems;
  
 
 
-  // Sepete ürün eklemek için bir işlev
   const addCartHandler = (item: _MenuItem) => {
 
-    // Eklenen ürünü cartActions'a gönder
     dispatch(addToCart(item));
     
   };
@@ -32,7 +29,7 @@ const MenuScreen: React.FC<Props> = () => {
       <ScrollView>
         {renderData.map((menuItem: _MenuItem, index: number) => (
           <MenuItem
-            addCartHandler={addCartHandler} // Sepete ekleme işlevini iletiyoruz
+            addCartHandler={addCartHandler} 
             menuItem={menuItem}
             key={menuItem.id}
             index={index}

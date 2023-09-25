@@ -16,15 +16,14 @@ const App = () => {
   let { user } = useSelector((state: any) => state.user);
 
   useEffect(() => {
-    // AsyncStorage'den kullanıcı bilgisini alın
+    //@ts-ignore
     dispatch(fetchMenu());
     AsyncStorage.getItem("user")
       .then((storedUser) => {
         if (storedUser) {
-          // Kullanıcı bilgisi Redux store'a gönderilir
+    
           dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
           user = { ...JSON.parse(storedUser) };
-         
         } else {
           user = null;
         }
@@ -42,6 +41,7 @@ const App = () => {
           headerShown: false,
         }}
       >
+      
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Cart" component={CartScreen} />

@@ -37,9 +37,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
         onChangeText={onPasswordChange}
         placeholder="Şifre"
       />
-       {(!isEmailValid && email.trim().length !== 0) && (
-        <Text style={styles.invalidInput}>Kullanıcı adı veya parolanız hatalı.</Text>
-      )}
+   
     </View>
   );
 };
