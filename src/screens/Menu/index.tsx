@@ -39,9 +39,7 @@ const MenuScreen: React.FC<Props> = () => {
           />
         ))}
       </ScrollView>
-      <Text>{JSON.stringify(menuItems)}</Text>
-      <hr/>
-      <Text>{JSON.stringify(cartItems)}</Text>
+     
     </SafeAreaProvider>
   );
 };
