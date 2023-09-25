@@ -12,7 +12,7 @@
 email: ornek@gmail.com
 password:12345678
 ```
-<div style="height: 0; padding-bottom: calc(53.13%); position:relative; width: 100%;"><iframe allow="autoplay; gyroscope;" allowfullscreen height="100%" referrerpolicy="strict-origin" src="https://www.kapwing.com/e/65119b84e7e4a7f07c081d62?autoplay=true" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%" title="Embedded content made on Kapwing" width="100%"></iframe></div>
+<video src="https://www.kapwing.com/e/65119b84e7e4a7f07c081d62?autoplay=true" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%"></video>
 
 ### Todos
 - [x] **Discount**
