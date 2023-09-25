@@ -12,7 +12,7 @@
 email: ornek@gmail.com
 password:12345678
 ```
-<img src="gif.gif" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%"/>
+<img src="./assets/gif.gif"/>
 
 ### Todos
 - [x] **Discount**
