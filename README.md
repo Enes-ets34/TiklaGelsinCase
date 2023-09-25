@@ -12,7 +12,8 @@
 email: ornek@gmail.com
 password:12345678
 ```
-<video src='./assets/video.mp4'></video>
+![video](video.mp4)
+
 ### Todos
 - [x] **Discount**
 - [x] **Menu Item Count**
