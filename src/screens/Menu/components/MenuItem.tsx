@@ -1,15 +1,10 @@
-// /src/components/Menu/MenuItem.tsx
-
 import React, { useState, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import MenuScreenStyles from "../styles/MenuScreenStyles";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuItem as _MenuItem } from "../../../interfaces/_MenuItem";
-import {
-  removeFromCart,
-  increaseQty,
-  decreaseQty,
-} from "../../../store/actions/cartActions";
+
+import useMenu from "../hooks/useMenu";
 
 type Props = {
   index: number;
@@ -18,44 +13,12 @@ type Props = {
 };
 
 const MenuItem: React.FC<Props> = ({ menuItem, index,addCartHandler }) => {
-  const { cartItems } = useSelector((state: any) => state.cart);
-
-  const [hasAlreadyCart, setHasAlreadyCart] = useState(false);
-  const [foundedData, setFoundedData] = useState(null);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const foundedData = cartItems.find((m: _MenuItem) => {
-      return m.id === menuItem.id;
-    });
-    if (foundedData) {
-      setHasAlreadyCart(true);
-      setFoundedData(foundedData)
-    }else{
-      setFoundedData(null)
-      setHasAlreadyCart(false);
-    }
- 
-  }, [cartItems, menuItem]);
-
-  // Sepetten ürün çıkarmak için işlev
-  const removeCartHandler = (item: _MenuItem) => {
-    dispatch(removeFromCart(item));
-  };
-
-  // Ürün adedini artırmak için işlev
-  const increaseQuantity = (item: _MenuItem) => {
-    dispatch(increaseQty(item));
-
-  };
-
-  // Ürün adedini azaltmak için işlev
-  const decreaseQuantity = (item: _MenuItem) => {
-    dispatch(decreaseQty(item));
-
-   
-  };
-
+  const {
+    increaseQuantity,
+    decreaseQuantity,
+    hasAlreadyCart,
+    foundedData
+  } = useMenu(menuItem);
   return (
     <View
       style={[

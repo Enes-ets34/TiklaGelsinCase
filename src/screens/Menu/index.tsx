@@ -6,21 +6,25 @@ import MenuItem from "./components/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuItem as _MenuItem } from "../../interfaces/_MenuItem";
 import { addToCart } from "../../store/actions/cartActions";
-
+import useMenu from "./hooks/useMenu";
+import {showModal} from "../../store/actions/modalActions"
 type Props = {};
 
 const MenuScreen: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const { menuItems, filteredItems } = useSelector((state: any) => state.menu);
 
-  let renderData = filteredItems.length > 0 ? filteredItems : menuItems;
- 
-
-
+  const {
+    renderData
+    // @ts-ignore
+  } = useMenu();
   const addCartHandler = (item: _MenuItem) => {
-
     dispatch(addToCart(item));
-    
+    dispatch(
+      showModal(
+        `${item.name} başarıyla sepetinize eklendi...`,
+        "success"
+      )
+    );
   };
 
   return (
@@ -36,7 +40,6 @@ const MenuScreen: React.FC<Props> = () => {
           />
         ))}
       </ScrollView>
-     
     </SafeAreaProvider>
   );
 };

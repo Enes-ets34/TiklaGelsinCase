@@ -7,13 +7,19 @@
 - React Native
 - Expo CLI
 
+# Example User
+```
+email: ornek@gmail.com
+password:12345678
+```
+<video src='./assets/video.mp4'></video>
 ### Todos
 - [x] **Discount**
 - [x] **Menu Item Count**
 - [x] **Add To Cart**
 - [x] **Filter** Menu
 - [x] **Login**
-- [ ] Buy and Clear Cart
+- [x] Buy and Clear Cart
 
 ### Getting Started
 
@@ -50,6 +56,7 @@ npm run ios
 │   └─ Cart/
 |   |    └─  components/ // Components
 |   |    └─  styles/ // Styling
+|   |    └─  hooks/ // Custom Hooks
 |   └─ index.tsx // Main Component
 |   |
 |   └─ Login/

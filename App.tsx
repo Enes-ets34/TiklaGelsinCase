@@ -13,6 +13,7 @@ export default function App() {
 }
 
 function AppContainer() {
+  //@ts-ignore
   const { showModal, message,icon } = useSelector((state) => state.modal);
 
   return (

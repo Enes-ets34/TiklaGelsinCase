@@ -43,6 +43,7 @@ const cartReducer = (state = initialState, action: any) => {
         cartItems: state.cartItems
           .map((item) =>
             item.id === action.payload.id
+            //@ts-ignore
               ? item.qty <= 1
                 ? null // Qty 1 ise ürünü kaldır
                 : { ...item, qty: (item.qty || 0) - 1 }

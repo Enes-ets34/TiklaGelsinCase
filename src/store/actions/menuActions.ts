@@ -10,7 +10,7 @@ export const fetchMenu = () => {
 
         dispatch({
           type: actionTypes.FETCH_MENU,
-          payload: response.data.map(m=>{
+          payload: response.data.map((m:any)=>{
             return{
               ...m,
               qty:0

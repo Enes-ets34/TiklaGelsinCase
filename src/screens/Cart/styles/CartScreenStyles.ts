@@ -63,6 +63,7 @@ const CartScreenStyles = StyleSheet.create({
     marginTop: "auto",
     borderTopWidth: 1,
     borderTopColor: "gray",
+    //@ts-ignore
     position: "sticky",
   },
   buyButton: {

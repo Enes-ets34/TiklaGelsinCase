@@ -1,51 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import CartHeader from "./components/CartHeader";
 import MenuItem from "../Menu/components/MenuItem";
 import { MenuItem as _MenuItem } from "../../interfaces/_MenuItem";
 import CartScreenStyles from "./styles/CartScreenStyles";
-import { useDispatch, useSelector } from "react-redux";
+import useCart from "./hooks/useCart"; 
 import { useNavigation } from "@react-navigation/native";
-import { clearCart } from "../../store/actions/cartActions";
-import CustomModal from "../components/shared/Modal";
-import  {showModal as showModalAction}  from "../../store/actions/modalActions";
-
 
 type Props = {};
 
 const CartScreen: React.FC<Props> = () => {
-  const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
+  const {
+    cartItems,
+    totalPrice,
+    discountAvailable,
+    discount,
+    price,
+    handleClearCart,
+  } = useCart();
 
-  const navigator = useNavigation();
-  let price = cartItems.reduce((total: number, cartItem: _MenuItem) => {
-    return total + cartItem.price * cartItem?.qty;
-  }, 0);
-
-  const [discountAvailable, setDiscountAvailable] = useState(false);
-  const [discount, setDiscount] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(price); // totalPrice'i bir state olarak tanımla
-
-
-  const handleClearCart = () =>{
-    dispatch(clearCart())
-    
-    dispatch(showModalAction(`${new Date().getTime()} numaralı siparişiniz başarıyla oluşturulmuştur...`,'success'));
-
-  }
-  useEffect(() => {
-    if (cartItems.length >= 2) {
-      setDiscountAvailable(true);
-      setDiscount(price * 0.3);
-      setTotalPrice(price - discount); // totalPrice state'ini güncelle
-    } else {
-      setDiscountAvailable(false);
-      setDiscount(0);
-      setTotalPrice(price); // totalPrice state'ini güncelle
-    }
-  }, [cartItems]);
- 
+ const navigator = useNavigation()
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CartHeader />
@@ -54,6 +28,7 @@ const CartScreen: React.FC<Props> = () => {
         <View style={CartScreenStyles.emptyCartMessageContainer}>
           <Text>
             sepetiniz boş...{" "}
+            {/* @ts-ignore */}
             <TouchableOpacity onPress={() => navigator.navigate("Menu")}>
               <Text
                 style={{ color: "#dc2626", textDecorationLine: "underline" }}

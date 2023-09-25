@@ -23,7 +23,7 @@ const MenuHeader: React.FC<Props> = () => {
     setSearchKey(text)
   }
   useEffect(() => {
-
+    //@ts-ignore
     dispatch(filterMenu(searchKey));
   }, [ searchKey]);
   const onLogout = () => {
