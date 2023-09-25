@@ -12,7 +12,7 @@
 email: ornek@gmail.com
 password:12345678
 ```
-<video src="https://www.kapwing.com/e/65119b84e7e4a7f07c081d62?autoplay=true" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%"></video>
+<img src="https://www.kapwing.com/e/65119b84e7e4a7f07c081d62?autoplay=true" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%"/>
 
 ### Todos
 - [x] **Discount**
