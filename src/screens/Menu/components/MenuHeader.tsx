@@ -1,9 +1,8 @@
-// /src/components/Menu/MenuHeader.tsx
 
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import { Ionicons, Fontisto, MaterialIcons } from "@expo/vector-icons";
-import MenuScreenStyles from "../styles/MenuScreenStyles"; // Stil dosyasını içe aktarın
+import MenuScreenStyles from "../styles/MenuScreenStyles"; 
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../store/actions/userActions";

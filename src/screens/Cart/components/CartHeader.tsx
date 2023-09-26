@@ -1,9 +1,8 @@
-// /src/components/Menu/MenuHeader.tsx
 
 import React from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import CartScreenStyles from "../styles/CartScreenStyles"; // Stil dosyasını içe aktarın
+import CartScreenStyles from "../styles/CartScreenStyles";  
 import { useNavigation } from "@react-navigation/native";
 type Props = {};
 const CartHeader: React.FC<Props> = () => {

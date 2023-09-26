@@ -55,7 +55,7 @@ const MenuItem: React.FC<Props> = ({ menuItem, index,addCartHandler }) => {
       {hasAlreadyCart && (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
-            onPress={() => increaseQuantity(menuItem)} // Ürün adedini artırmak için işlevi çağırın
+            onPress={() => increaseQuantity(menuItem)} 
             style={{
               padding: 8,
               borderWidth: 1,
@@ -71,7 +71,7 @@ const MenuItem: React.FC<Props> = ({ menuItem, index,addCartHandler }) => {
             {foundedData?.qty} Adet
           </Text>
           <TouchableOpacity
-            onPress={() => decreaseQuantity(menuItem)} // Ürün adedini azaltmak için işlevi çağırın
+            onPress={() => decreaseQuantity(menuItem)}
             style={{
               padding: 8,
               borderWidth: 1,

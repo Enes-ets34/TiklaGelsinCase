@@ -7,10 +7,8 @@ const useCart = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: any) => state.cart);
 
-  // price'ı başlangıç değeri olarak 0 tanımlayın
   const [price, setPrice] = useState(0);
 
-  // Diğer state değerlerini değiştirmeye gerek yok
   const [discountAvailable, setDiscountAvailable] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(price);
@@ -27,7 +25,6 @@ const useCart = () => {
   };
 
   useEffect(() => {
-    // price'ı doğru şekilde hesaplayın
     const newPrice = cartItems.reduce((total: number, cartItem: any) => {
       return total + cartItem.price * cartItem?.qty;
     }, 0);

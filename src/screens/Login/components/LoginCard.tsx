@@ -1,13 +1,13 @@
 import React from "react";
 import { TextInput, View, Text } from "react-native";
-import styles from "../styles/LoginScreenStyles"; // Stil tanımlamalarını içeren dosya
+import styles from "../styles/LoginScreenStyles"; 
 
 type LoginCardProps = {
   email: string;
   password: string;
   onEmailChange: (text: string) => void;
   onPasswordChange: (text: string) => void;
-  isEmailValid: boolean; // E-posta geçerliliği durumunu iletmek için props eklendi
+  isEmailValid: boolean; 
 };
 
 const LoginCard: React.FC<LoginCardProps> = ({

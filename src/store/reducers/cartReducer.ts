@@ -1,4 +1,3 @@
-// cartReducer.js
 
 import { MenuItem } from "../../interfaces/_MenuItem";
 import * as actionTypes from "../../constants/actionTypes";

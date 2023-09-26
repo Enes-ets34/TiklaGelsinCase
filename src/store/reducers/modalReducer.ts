@@ -1,4 +1,3 @@
-// modalReducer.js
 
 import * as actionTypes from "../../constants/actionTypes";
 
